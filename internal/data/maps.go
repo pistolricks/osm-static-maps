@@ -37,7 +37,51 @@ func LocationMap(geo *Geo) {
 	}
 
 	ctx := sm.NewContext()
-	ctx.SetSize(400, 400)
+	ctx.SetSize(600, 400)
+	ctx.SetZoom(14)
+
+	ctx.OverrideAttribution(title)
+	ctx.AddObject(
+		sm.NewMarker(
+			s2.LatLngFromDegrees(lat, lng),
+			color.RGBA{0xff, 0, 0, 0xff},
+			16.0,
+		),
+	)
+
+	img, err := ctx.Render()
+	if err != nil {
+		panic(err)
+	}
+	fileTitle := fmt.Sprintf("%s.png", filename)
+	if err := gg.SavePNG(fileTitle, img); err != nil {
+		panic(err)
+	}
+}
+
+func areaMap(geo *Geo) {
+
+	title := geo.Title
+	filename := geo.FileName
+	lat := geo.Lat
+	lng := geo.Lng
+
+	if title == "" {
+		panic("missing title")
+	}
+	if filename == "" {
+		panic("missing filename")
+	}
+	if lat == 0 {
+		panic("missing lat")
+	}
+
+	if lng == 0 {
+		panic("missing lng")
+	}
+
+	ctx := sm.NewContext()
+	ctx.SetSize(600, 400)
 
 	ctx.OverrideAttribution(title)
 	ctx.SetCenter(s2.LatLngFromDegrees(lat, lng))
