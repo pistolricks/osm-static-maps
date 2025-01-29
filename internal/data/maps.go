@@ -117,20 +117,3 @@ func MultilineMap() {
 		panic(err)
 	}
 }
-
-func MultilineAttributionMap() {
-	ctx := sm.NewContext()
-	ctx.SetSize(400, 300)
-	ctx.OverrideAttribution("This is a\nmulti-line\nattribution string.")
-	ctx.SetCenter(s2.LatLngFromDegrees(48, 7.9))
-	ctx.SetZoom(13)
-
-	img, err := ctx.Render()
-	if err != nil {
-		panic(err)
-	}
-
-	if err := gg.SavePNG("multiline-attribution.png", img); err != nil {
-		panic(err)
-	}
-}
